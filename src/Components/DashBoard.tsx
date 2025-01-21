@@ -8,7 +8,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import "../customerStyling/DashboardMobile.css"
+import "../customerStyling/DashboardMobile.css";
 import Popup from "./TaskManagePop-up";
 import StickyNote from "./StickyNote";
 
@@ -19,29 +19,6 @@ const initialTasks = {
   ],
   inProgress: [{ id: "3", content: "Task 3: Prepare for the meeting" }],
   complete: [{ id: "4", content: "Task 4: Submit the report" }],
-};
-
-const SortableItem = ({ id, content }: { id: string; content: string }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-    id,
-  });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="bg-white p-3 rounded mb-2 shadow cursor-pointer"
-    >
-      {content}
-    </div>
-  );
 };
 
 const Dashboard: React.FC = () => {
@@ -98,10 +75,33 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const SortableItem = ({ id, content }: { id: string; content: string }) => {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+      id,
+    });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+    };
+
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        className="bg-white p-3 rounded mb-2 shadow cursor-pointer"
+      >
+        {content}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen" style={{ background: "rgba(255, 255, 255, 1)" }}>
       {/* Header Section */}
-      <header className="flex justify-between items-center p-4 bg-white rounded ">
+      <header className="flex justify-between items-center p-4 bg-white rounded">
         <h1 className="text-2xl font-Mulish text-gray-800">TodoSI</h1>
         <div className="w-10 h-10 bg-gray-300 rounded-full" />
       </header>
@@ -140,8 +140,7 @@ const Dashboard: React.FC = () => {
             placeholder="Search tasks..."
             className="px-3 py-2 border border-gray-300 rounded shadow-sm w-full sm:w-60 mb-2 sm:mb-0"
           />
-          <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-800 w-full sm:w-auto"
-            onClick={() => setShowPopup(true)}>
+          <button className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-800 w-full sm:w-auto" onClick={() => setShowPopup(true)}>
             + Add Task
           </button>
           {showPopup && <Popup onClose={() => setShowPopup(false)} />}
@@ -157,49 +156,41 @@ const Dashboard: React.FC = () => {
                 className="p-4 rounded shadow"
                 style={{ background: "rgba(88, 87, 81, 0.07)" }}
               >
-                <div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-4">
-                    <span
-                      style={{
-                        background:
-                          status === "todo"
-                            ? "rgba(255, 182, 193, 0.5)" // Baby pink for 'To-Do'
-                            : status === "inProgress"
-                              ? "rgba(173, 216, 230, 0.5)" // Light blue for 'In-Progress'
-                              : "rgba(144, 238, 144, 0.5)", // Light green for 'Completed'
-                        padding: "0.2rem 0.5rem", // Add padding to make it look neat
-                        borderRadius: "4px", // Optional: rounded corners
-                        display: "inline-block", // Ensures the background wraps around the text
-                      }}
-                    >
-                      {status === "todo"
-                        ? "To-Do"
-                        : status === "inProgress"
-                          ? "In-Progress"
-                          : "Completed"}
-                    </span>
-                  </h3>
-                </div>
+                <h3 className="text-lg font-bold text-gray-800 mb-4">
+                  <span
+                    style={{
+                      background:
+                        status === "todo"
+                          ? "rgba(255, 182, 193, 0.5)" // Baby pink for 'To-Do'
+                          : status === "inProgress"
+                          ? "rgba(173, 216, 230, 0.5)" // Light blue for 'In-Progress'
+                          : "rgba(144, 238, 144, 0.5)", // Light green for 'Completed'
+                      padding: "0.2rem 0.5rem", // Add padding to make it look neat
+                      borderRadius: "4px", // Optional: rounded corners
+                      display: "inline-block", // Ensures the background wraps around the text
+                    }}
+                  >
+                    {status === "todo"
+                      ? "To-Do"
+                      : status === "inProgress"
+                      ? "In-Progress"
+                      : "Completed"}
+                  </span>
+                </h3>
 
                 {tasks[status].map((task) => (
-                  <div key={task.id}>
-                    <StickyNote
-                      title={task.content}
-                      onEdit={() => { }}
-                      onDelete={() => { }}
-                      style={{
-                        textDecoration: status === "complete" ? "line-through" : "none", // Apply strike-through if completed
-                      }}
-                    />
-                  </div>
+                  <SortableItem
+                    key={task.id}
+                    id={task.id}
+                    content={task.content}
+                  />
                 ))}
-
               </div>
             </SortableContext>
           ))}
         </div>
-      </DndContext >
-    </div >
+      </DndContext>
+    </div>
   );
 };
 
