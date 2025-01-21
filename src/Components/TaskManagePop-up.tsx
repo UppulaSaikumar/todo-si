@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Popup = ({ onClose }: { onClose: () => void }) => {
   const [taskCategory, setTaskCategory] = useState("work");
