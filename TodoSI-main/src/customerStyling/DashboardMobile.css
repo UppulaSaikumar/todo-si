@@ -1,0 +1,51 @@
+/* General mobile responsiveness */
+@media (max-width: 768px) {
+    .mobile-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .mobile-header h1 {
+      font-size: 1.5rem;
+    }
+  
+    .mobile-header .w-10 {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: gray;
+    }
+  
+    .mobile-add-task {
+      margin-top: 20px;
+      width: 100%;
+    }
+  
+    .mobile-pile {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .mobile-category,
+    .mobile-due-date {
+      width: 100%;
+    }
+  
+    .mobile-search {
+      margin-top: 20px;
+    }
+    
+    .mobile-category select, 
+    .mobile-due-date input, 
+    .mobile-search input {
+      width: 100%;
+    }
+  
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
